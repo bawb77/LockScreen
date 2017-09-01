@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LockScreen</string>
+    <string name="title_activity_set_password">SetPassword</string>
+    <string name="title_activity_check_password">CheckPassword</string>
 </resources>

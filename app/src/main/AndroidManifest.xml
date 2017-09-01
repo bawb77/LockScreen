@@ -16,6 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SetPassword"
+            android:label="@string/title_activity_set_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CheckPassword"
+            android:label="@string/title_activity_check_password"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.drsystems.lockscreen.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
