@@ -10,17 +10,10 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="nextStep"
         android:text="Set Password"
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="163dp" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Password"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="263dp" />
 
     <TextView
         android:id="@+id/textView"

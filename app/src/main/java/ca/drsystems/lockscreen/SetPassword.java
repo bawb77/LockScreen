@@ -1,14 +1,16 @@
 package ca.drsystems.lockscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 
 public class SetPassword extends AppCompatActivity {
-
+    int[] numPass,shaPass,colPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,15 @@ public class SetPassword extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+    public void setPassword(View v){
+        CheckBox nC = (CheckBox)findViewById(R.id.NumPass);
+        CheckBox sC = (CheckBox)findViewById(R.id.ShapePass);
+        CheckBox cC = (CheckBox)findViewById(R.id.ColourPass);
+        PasswordWhole transit = new PasswordWhole(numPass,shaPass,colPass,nC.isChecked(),sC.isChecked(),cC.isChecked());
+        Intent intent = new Intent(this,CheckPassword.class);
+        intent.putExtra("password",transit);
+        startActivity(intent);
     }
 
 }
