@@ -1,5 +1,6 @@
 package ca.drsystems.lockscreen;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,9 +61,27 @@ public class CheckPassword extends AppCompatActivity {
         }
         for (PasswordBlock b : displayArray){
             Button addButton = new Button(this);
-            addButton.setBackgroundColor(Color.BLUE);
+            switch(b.getColour()){
+                case 0: addButton.setBackgroundColor(Color.BLUE);
+                case 1: addButton.setBackgroundColor(Color.RED);
+                case 2: addButton.setBackgroundColor(Color.YELLOW);
+                case 3: addButton.setBackgroundColor(Color.GRAY);
+                case 4: addButton.setBackgroundColor(Color.GREEN);
+                case 5: addButton.setBackgroundColor(Color.BLACK);
+                case 6: addButton.setBackgroundColor(Color.WHITE);
+                case 7: addButton.setBackgroundColor(Color.CYAN);
+            }
+            switch(b.getShape()){
+                case 0:addButton.setWidth(100); addButton.setHeight(100);//square
+                case 1:addButton.setWidth(200); addButton.setHeight(100);//rectangle
+                case 2:addButton.setWidth(100); addButton.setHeight(100);//circle TBC
+                case 3://triangle TBC
+            }
 
-
+            addButton.setText(b.getNumeric());
+            addButton.setTag(b);
+            GridLayout gL = (GridLayout)findViewById(R.id.gL);
+            gL.addView(addButton);
         }
     }
     public void checkPassword(PasswordBlock in){
@@ -74,7 +94,10 @@ public class CheckPassword extends AppCompatActivity {
                 i++;
             }
 
-            superSecret.checkIt(out);
+            if(superSecret.checkIt(out)){
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+            }
         }
     }
 
