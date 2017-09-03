@@ -13,8 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class SetPassword extends AppCompatActivity {
-    int[] numPass,shaPass,colPass;
+    int[] numPass, shaPass, colPass;
     Spinner shaS1, shaS2, shaS3, shaS4, colS1, colS2, colS3, colS4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +32,8 @@ public class SetPassword extends AppCompatActivity {
             }
         });
 
-        String[] shaArraySpinner = new String[]{"Square","Rectangle","Circle","Triangle"};
-        String[] colArraySpinner = new String[]{"Blue","Red","Yellow","Gray","Green","Black","White","Cyan"};
+        String[] shaArraySpinner = new String[]{"Square", "Rectangle", "Circle", "Triangle"};
+        String[] colArraySpinner = new String[]{"Blue", "Red", "Yellow", "Gray", "Green", "Black", "White", "Cyan"};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shaArraySpinner);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colArraySpinner);
         shaS1 = (Spinner) findViewById(R.id.Sha1);
@@ -54,24 +55,24 @@ public class SetPassword extends AppCompatActivity {
 
     }
 
-    public void setPassword(View v){
+    public void setPassword(View v) {
 
-        CheckBox nC = (CheckBox)findViewById(R.id.NumPass);
-        CheckBox sC = (CheckBox)findViewById(R.id.ShapePass);
-        CheckBox cC = (CheckBox)findViewById(R.id.ColourPass);
+        CheckBox nC = (CheckBox) findViewById(R.id.NumPass);
+        CheckBox sC = (CheckBox) findViewById(R.id.ShapePass);
+        CheckBox cC = (CheckBox) findViewById(R.id.ColourPass);
 
-        char[] temp = (((EditText)findViewById(R.id.NumDigit)).toString()).toCharArray();
+        char[] temp = (((EditText) findViewById(R.id.NumDigit)).toString()).toCharArray();
         int[] tempArray = new int[3];
-        for(int i =0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             tempArray[i] = Character.getNumericValue(temp[i]);
         }
         numPass = tempArray;
 
-        shaPass = new int[]{shaS1.getSelectedItemPosition(),shaS2.getSelectedItemPosition(),shaS3.getSelectedItemPosition(),shaS4.getSelectedItemPosition()};
-        colPass = new int[]{colS1.getSelectedItemPosition(),colS2.getSelectedItemPosition(),colS3.getSelectedItemPosition(),colS4.getSelectedItemPosition()};
-        PasswordWhole transit = new PasswordWhole(numPass,shaPass,colPass,nC.isChecked(),sC.isChecked(),cC.isChecked());
-        Intent intent = new Intent(this,CheckPassword.class);
-        intent.putExtra("password",transit);
+        shaPass = new int[]{shaS1.getSelectedItemPosition(), shaS2.getSelectedItemPosition(), shaS3.getSelectedItemPosition(), shaS4.getSelectedItemPosition()};
+        colPass = new int[]{colS1.getSelectedItemPosition(), colS2.getSelectedItemPosition(), colS3.getSelectedItemPosition(), colS4.getSelectedItemPosition()};
+        PasswordWhole transit = new PasswordWhole(numPass, shaPass, colPass, nC.isChecked(), sC.isChecked(), cC.isChecked());
+        Intent intent = new Intent(this, CheckPassword.class);
+        intent.putExtra("password", transit);
         startActivity(intent);
     }
 

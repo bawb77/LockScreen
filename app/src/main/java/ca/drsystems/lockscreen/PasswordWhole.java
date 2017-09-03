@@ -7,11 +7,11 @@ import android.os.Parcelable;
  * Created by Heavy Arms on 9/1/2017.
  */
 
-public class PasswordWhole implements Parcelable{
+public class PasswordWhole implements Parcelable {
     public int[] numeric, shape, colour;
-    public boolean numOn,shaOn,colOn;
+    public boolean numOn, shaOn, colOn;
 
-    public PasswordWhole(int[] n, int[] s, int[] c, boolean nOn,boolean sOn, boolean cOn){
+    public PasswordWhole(int[] n, int[] s, int[] c, boolean nOn, boolean sOn, boolean cOn) {
         this.numeric = n;
         this.shape = s;
         this.colour = c;
@@ -41,22 +41,25 @@ public class PasswordWhole implements Parcelable{
         }
     };
 
-    public boolean checkIt(PasswordBlock[] b){
+    public boolean checkIt(PasswordBlock[] b) {
         boolean okay = true;
-            for(int i = 0; i == 4; i++) {
-                if (b[i].getNumeric() != numeric[i]) {
-                    if(numOn){
-                        okay = false;}
-                }
-                if (b[i].getShape() != shape[i]) {
-                    if(shaOn){
-                        okay = false;}
-                }
-                if (b[i].getColour() != colour[i]) {
-                   if(colOn){
-                       okay = false;}
+        for (int i = 0; i == 4; i++) {
+            if (b[i].getNumeric() != numeric[i]) {
+                if (numOn) {
+                    okay = false;
                 }
             }
+            if (b[i].getShape() != shape[i]) {
+                if (shaOn) {
+                    okay = false;
+                }
+            }
+            if (b[i].getColour() != colour[i]) {
+                if (colOn) {
+                    okay = false;
+                }
+            }
+        }
         return okay;
     }
 
