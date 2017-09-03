@@ -2,43 +2,34 @@ package ca.drsystems.lockscreen;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashSet;
-
-/**
- * Created by Heavy Arms on 9/1/2017.
- */
 
 class PasswordWhole implements Parcelable {
     private PasswordBlock[] input;
-    private boolean numOn, shaOn, colOn;
+    private boolean numericPasswordEnabledFlag, shapePasswordEnabledFlag, colourPasswordEnabledFlag;
     private String[] hashedPasswords;
-    MessageDigest md;
+    MessageDigest messageDigest;
 
     public PasswordWhole(PasswordBlock[] in, boolean nOn, boolean sOn, boolean cOn) {
         this.input = in;
-        this.numOn = nOn;
-        this.shaOn = sOn;
-        this.colOn = cOn;
+        this.numericPasswordEnabledFlag = nOn;
+        this.shapePasswordEnabledFlag = sOn;
+        this.colourPasswordEnabledFlag = cOn;
         hashedPasswords = unPack(input);
     }
 
     protected PasswordWhole(Parcel in) {
-        numOn = in.readByte() != 0;
-        shaOn = in.readByte() != 0;
-        colOn = in.readByte() != 0;
+        numericPasswordEnabledFlag = in.readByte() != 0;
+        shapePasswordEnabledFlag = in.readByte() != 0;
+        colourPasswordEnabledFlag = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (numOn ? 1 : 0));
-        dest.writeByte((byte) (shaOn ? 1 : 0));
-        dest.writeByte((byte) (colOn ? 1 : 0));
+        dest.writeByte((byte) (numericPasswordEnabledFlag ? 1 : 0));
+        dest.writeByte((byte) (shapePasswordEnabledFlag ? 1 : 0));
+        dest.writeByte((byte) (colourPasswordEnabledFlag ? 1 : 0));
     }
 
     @Override
@@ -61,7 +52,7 @@ class PasswordWhole implements Parcelable {
     private String[] unPack(PasswordBlock[] pBlock){
         String numericPassword = "", shapePassword="", colourPassword="";
         String[] passwordsArray;
-        for(int i=0;i<4;i++){
+        for(int i=0;i<3;i++){
             numericPassword.concat(String.valueOf(pBlock[i].getNumeric()));
             shapePassword.concat(String.valueOf(pBlock[i].getShape()));
             colourPassword.concat(String.valueOf(pBlock[i].getColour()));
@@ -70,9 +61,9 @@ class PasswordWhole implements Parcelable {
         for (String str : passwordsArray)
         {
             try{
-                md = MessageDigest.getInstance("sha-512");
-                md.update(str.getBytes());
-                byte[] mb = md.digest();
+                messageDigest = MessageDigest.getInstance("sha-512");
+                messageDigest.update(str.getBytes());
+                byte[] mb = messageDigest.digest();
                 String out = "";
                 for (int i = 0; i < mb.length; i++)
                 {

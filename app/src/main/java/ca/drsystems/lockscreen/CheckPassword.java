@@ -2,6 +2,7 @@ package ca.drsystems.lockscreen;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,7 +33,6 @@ public class CheckPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_password);
-
         superSecret = getIntent().getParcelableExtra("password");
         numericList = new ArrayList();
         shapeList = new ArrayList();
@@ -43,7 +43,6 @@ public class CheckPassword extends AppCompatActivity {
     }
 
     public void populateGrid() {
-
         numericList.addAll(Arrays.asList(numericOptions));
         shapeList.addAll(Arrays.asList(shapeOptions));
         colourList.addAll(Arrays.asList(colourOptions));
@@ -70,8 +69,8 @@ public class CheckPassword extends AppCompatActivity {
                 case 7:
                     addButton.setBackgroundColor(Color.CYAN);
             }
-            //GradientDrawable gD = new GradientDrawable();
-            //gD.setCornerRadius(100);
+            GradientDrawable gD = new GradientDrawable();
+            gD.setCornerRadius(100);
             switch (displayArray[i].getShape()) {
                 case 0:
                     addButton.setWidth(100);
@@ -81,8 +80,12 @@ public class CheckPassword extends AppCompatActivity {
                     addButton.setHeight(100);//rectangle
                 case 2:
                     addButton.setWidth(100);
-                    addButton.setHeight(100);//circle TBC
-                case 3://triangle TBC
+                    addButton.setHeight(100);
+                    addButton.setBackgroundDrawable(gD);
+                case 3:
+                    addButton.setWidth(100);
+                    addButton.setHeight(60);
+                    addButton.setBackgroundDrawable(gD);
             }
             addButton.setText(String.valueOf(displayArray[i].getNumeric()));
             final int transfer = i;
@@ -115,25 +118,25 @@ public class CheckPassword extends AppCompatActivity {
     }
 
     public PasswordBlock GenerateBlock() {
-        int num = 0;
-        int sha = 0;
-        int col = 0;
+        int tempNumeric = 0;
+        int tempShape = 0;
+        int tempColour = 0;
         if (numericList.isEmpty()) {
             numericList.addAll(Arrays.asList(numericOptions));
         } else {
-            num = numericList.remove(rand.nextInt(numericList.size()));
+            tempNumeric = numericList.remove(rand.nextInt(numericList.size()));
         }
         if (shapeList.isEmpty()) {
             shapeList.addAll(Arrays.asList(shapeOptions));
         } else {
-            sha = shapeList.remove(rand.nextInt(shapeList.size()));
+            tempShape = shapeList.remove(rand.nextInt(shapeList.size()));
         }
         if (colourList.isEmpty()) {
             colourList.addAll(Arrays.asList(colourOptions));
         } else {
-            col = colourList.remove(rand.nextInt(colourList.size()));
+            tempColour = colourList.remove(rand.nextInt(colourList.size()));
         }
-        PasswordBlock block = new PasswordBlock(num, sha, col);
+        PasswordBlock block = new PasswordBlock(tempNumeric, tempShape, tempColour);
 
         return block;
     }

@@ -1,8 +1,5 @@
 package ca.drsystems.lockscreen;
 
-/**
- * Created by Heavy Arms on 9/1/2017.
- */
 
 public class PasswordBlock {
     public int numeric, shape, colour;
