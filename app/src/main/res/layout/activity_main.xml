@@ -6,20 +6,32 @@
     android:layout_height="match_parent"
     tools:context="ca.drsystems.lockscreen.MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="nextStep"
-        android:text="Set Password"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="163dp" />
+    <LinearLayout
+        android:layout_width="344dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="292dp"
-        android:layout_height="118dp"
-        android:text="Welcome to the Test application for a smudge, shoulder, and social engineering proof lock screen. Simply set a password an then test the concept."
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="22dp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="344dp"
+            android:layout_height="118dp"
+            android:layout_weight="1"
+            android:text="Welcome to the Test application for a smudge, shoulder, and social engineering proof lock screen. Simply set a password an then test the concept."
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="nextStep"
+            android:text="Set Password"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="163dp" />
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
