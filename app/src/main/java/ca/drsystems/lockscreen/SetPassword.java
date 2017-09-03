@@ -20,17 +20,6 @@ public class SetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         String[] shaArraySpinner = new String[]{"Square", "Rectangle", "Circle", "Triangle"};
         String[] colArraySpinner = new String[]{"Blue", "Red", "Yellow", "Gray", "Green", "Black", "White", "Cyan"};
@@ -52,16 +41,14 @@ public class SetPassword extends AppCompatActivity {
         colS2.setAdapter(adapter2);
         colS3.setAdapter(adapter2);
         colS4.setAdapter(adapter2);
-
     }
 
     public void setPassword(View v) {
-
         CheckBox nC = (CheckBox) findViewById(R.id.NumPass);
         CheckBox sC = (CheckBox) findViewById(R.id.ShapePass);
         CheckBox cC = (CheckBox) findViewById(R.id.ColourPass);
 
-        char[] temp = (((EditText) findViewById(R.id.NumDigit)).toString()).toCharArray();
+        char[] temp = ((findViewById(R.id.NumDigit)).toString()).toCharArray();
         int[] tempArray = new int[3];
         for (int i = 0; i < 3; i++) {
             tempArray[i] = Character.getNumericValue(temp[i]);
@@ -70,7 +57,13 @@ public class SetPassword extends AppCompatActivity {
 
         shaPass = new int[]{shaS1.getSelectedItemPosition(), shaS2.getSelectedItemPosition(), shaS3.getSelectedItemPosition(), shaS4.getSelectedItemPosition()};
         colPass = new int[]{colS1.getSelectedItemPosition(), colS2.getSelectedItemPosition(), colS3.getSelectedItemPosition(), colS4.getSelectedItemPosition()};
-        PasswordWhole transit = new PasswordWhole(numPass, shaPass, colPass, nC.isChecked(), sC.isChecked(), cC.isChecked());
+        PasswordBlock[] packaging = new PasswordBlock[3];
+        for(int i = 0; i < 4;i++)
+        {
+            PasswordBlock tempBlock = new PasswordBlock(numPass[i],shaPass[i],colPass[i]);
+            packaging[i] = tempBlock;
+        }
+        PasswordWhole transit = new PasswordWhole(packaging, nC.isChecked(), sC.isChecked(), cC.isChecked());
         Intent intent = new Intent(this, CheckPassword.class);
         intent.putExtra("password", transit);
         startActivity(intent);
