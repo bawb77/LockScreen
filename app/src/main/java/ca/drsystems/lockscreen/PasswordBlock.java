@@ -12,9 +12,7 @@ public class PasswordBlock {
     public int getNumeric() {
         return this.numeric;
     }
-    public int getShape(){
-        return this.shape;
-    }
+    public int getShape(){ return this.shape; }
     public int getColour(){
         return this.colour;
     }

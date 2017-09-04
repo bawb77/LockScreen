@@ -52,22 +52,22 @@ class PasswordWhole implements Parcelable {
     private String[] unPack(PasswordBlock[] pBlock){
         String numericPassword = "", shapePassword="", colourPassword="";
         String[] passwordsArray;
-        for(int i=0;i<3;i++){
+        for(int i=0;i<pBlock.length;i++){
             numericPassword.concat(String.valueOf(pBlock[i].getNumeric()));
             shapePassword.concat(String.valueOf(pBlock[i].getShape()));
             colourPassword.concat(String.valueOf(pBlock[i].getColour()));
         }
         passwordsArray = new String[]{numericPassword,shapePassword,colourPassword};
-        for (String str : passwordsArray)
+        for (int i = 0; i < passwordsArray.length; i++)
         {
             try{
                 messageDigest = MessageDigest.getInstance("sha-512");
-                messageDigest.update(str.getBytes());
+                messageDigest.update(passwordsArray[i].getBytes());
                 byte[] mb = messageDigest.digest();
                 String out = "";
-                for (int i = 0; i < mb.length; i++)
+                for (int j = 0; j < mb.length; j++)
                 {
-                    byte temp = mb[i];
+                    byte temp = mb[j];
                     String s = Integer.toHexString(new Byte(temp));
                     while (s.length() < 2)
                     {
@@ -76,7 +76,7 @@ class PasswordWhole implements Parcelable {
                     s = s.substring(s.length() - 2);
                     out += s;
                 }
-                str = out;
+                passwordsArray[i] = out;
             }
             catch(NoSuchAlgorithmException e){
                 System.out.println("ERROR: " + e.getMessage());
@@ -88,7 +88,7 @@ class PasswordWhole implements Parcelable {
     public boolean checkIt(PasswordBlock[] b) {
         String[] passwordAttempt = unPack(b);
         boolean okay = false;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < passwordAttempt.length; i++) {
             if (passwordAttempt[i].contentEquals(hashedPasswords[i])) {
                 okay = true;
             }

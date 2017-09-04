@@ -37,7 +37,7 @@ public class CheckPassword extends AppCompatActivity {
         numericList = new ArrayList();
         shapeList = new ArrayList();
         colourList = new ArrayList();
-        output = new ArrayList<>(3);
+        output = new ArrayList<>(4);
         Log.v("debug", "process");
         populateGrid();
     }
@@ -102,12 +102,11 @@ public class CheckPassword extends AppCompatActivity {
 
     public void checkPassword(PasswordBlock in) {
         output.add(in);
-        if (!output.contains(null)) {
-            PasswordBlock[] out = new PasswordBlock[3];
-            int i = 0;
-            for (PasswordBlock b : output) {
-                out[i] = b;
-                i++;
+        if (output.size() == 4) {
+            PasswordBlock[] out = new PasswordBlock[4];
+
+            for (int i = 0;i<out.length;i++) {
+                out[i] = output.get(i);
             }
 
             if (superSecret.checkIt(out)) {

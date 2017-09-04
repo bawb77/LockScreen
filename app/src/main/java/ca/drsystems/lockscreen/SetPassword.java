@@ -44,10 +44,10 @@ public class SetPassword extends AppCompatActivity {
         CheckBox shapeCheckBox = (CheckBox) findViewById(R.id.ShapePass);
         CheckBox colourCheckBox = (CheckBox) findViewById(R.id.ColourPass);
         String numericTemp = (findViewById(R.id.NumDigit)).toString();
-        if(!numericTemp.contentEquals("")){
+        if(!numericTemp.isEmpty()){
             char[] temp = numericTemp.toCharArray();
-            int[] tempArray = new int[3];
-            for (int i = 0; i < 3; i++) {
+            int[] tempArray = new int[temp.length];
+            for (int i = 0; i < temp.length; i++) {
                 tempArray[i] = Character.getNumericValue(temp[i]);
             }
             numericPassword = tempArray;
@@ -56,8 +56,8 @@ public class SetPassword extends AppCompatActivity {
         }
         shapePassword = new int[]{shapeSpinner1.getSelectedItemPosition(), shapeSpinner2.getSelectedItemPosition(), shapeSpinner3.getSelectedItemPosition(), shapeSpinner4.getSelectedItemPosition()};
         colourPassword = new int[]{colourSpinner1.getSelectedItemPosition(), colourSpinner2.getSelectedItemPosition(), colourSpinner3.getSelectedItemPosition(), colourSpinner4.getSelectedItemPosition()};
-        PasswordBlock[] packaging = new PasswordBlock[3];
-        for(int i = 0; i < 3;i++)
+        PasswordBlock[] packaging = new PasswordBlock[4];
+        for(int i = 0; i < packaging.length;i++)
         {
             PasswordBlock tempBlock = new PasswordBlock(numericPassword[i],shapePassword[i],colourPassword[i]);
             packaging[i] = tempBlock;
