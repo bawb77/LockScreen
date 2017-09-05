@@ -3,6 +3,7 @@ package ca.drsystems.lockscreen;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,17 +15,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+//Created by Ben Baxter
+
 public class CheckPassword extends AppCompatActivity {
     Integer[] numericOptions = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     Integer[] shapeOptions = new Integer[]{0, 1, 2};
     Integer[] colourOptions = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7};
+    protected static final int passwordLength = 4;
+    protected static final int gridSize = 28;
     PasswordWhole superSecret;
     ArrayList<Integer> numericList;
     ArrayList<Integer> shapeList;
     ArrayList<Integer> colourList;
     ArrayList<PasswordBlock> output;
 
-    PasswordBlock[] displayArray = new PasswordBlock[29];
+    PasswordBlock[] displayArray = new PasswordBlock[gridSize];
 
 
     Random rand = new Random();
@@ -34,11 +39,11 @@ public class CheckPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_password);
         superSecret = getIntent().getParcelableExtra("password");
-        numericList = new ArrayList();
-        shapeList = new ArrayList();
-        colourList = new ArrayList();
-        output = new ArrayList<>(3);
-        Log.v("debug", "process");
+        numericList = new ArrayList<>();
+        shapeList = new ArrayList<>();
+        colourList = new ArrayList<>();
+
+        output = new ArrayList<>(passwordLength);
         populateGrid();
     }
 
@@ -46,73 +51,29 @@ public class CheckPassword extends AppCompatActivity {
         numericList.addAll(Arrays.asList(numericOptions));
         shapeList.addAll(Arrays.asList(shapeOptions));
         colourList.addAll(Arrays.asList(colourOptions));
-        Log.v("debug", "adding button 1");
+        GridLayout gL = (GridLayout) findViewById(R.id.gL);
+        gL.setColumnCount(passwordLength);
         for (int i = 0; i < displayArray.length; i++) {
-            Log.v("debug", "adding button 2");
             displayArray[i] = GenerateBlock();
-            Button addButton = new Button(this);
-            switch (displayArray[i].getColour()) {
-                case 0:
-                    addButton.setBackgroundColor(Color.BLUE);
-                case 1:
-                    addButton.setBackgroundColor(Color.RED);
-                case 2:
-                    addButton.setBackgroundColor(Color.YELLOW);
-                case 3:
-                    addButton.setBackgroundColor(Color.GRAY);
-                case 4:
-                    addButton.setBackgroundColor(Color.GREEN);
-                case 5:
-                    addButton.setBackgroundColor(Color.BLACK);
-                case 6:
-                    addButton.setBackgroundColor(Color.WHITE);
-                case 7:
-                    addButton.setBackgroundColor(Color.CYAN);
-            }
-            GradientDrawable gD = new GradientDrawable();
-            gD.setCornerRadius(100);
-            switch (displayArray[i].getShape()) {
-                case 0:
-                    addButton.setWidth(100);
-                    addButton.setHeight(100);//square
-                case 1:
-                    addButton.setWidth(200);
-                    addButton.setHeight(100);//rectangle
-                case 2:
-                    addButton.setWidth(100);
-                    addButton.setHeight(100);
-                    addButton.setBackgroundDrawable(gD);
-                case 3:
-                    addButton.setWidth(100);
-                    addButton.setHeight(60);
-                    addButton.setBackgroundDrawable(gD);
-            }
-            addButton.setText(String.valueOf(displayArray[i].getNumeric()));
-            final int transfer = i;
-            addButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    checkPassword(displayArray[transfer]);
-                }
-            });
-            GridLayout gL = (GridLayout) findViewById(R.id.gL);
-
-            gL.addView(addButton);
+            gL.addView(makeButton(i));
         }
     }
 
     public void checkPassword(PasswordBlock in) {
         output.add(in);
-        if (!output.contains(null)) {
-            PasswordBlock[] out = new PasswordBlock[3];
-            int i = 0;
-            for (PasswordBlock b : output) {
-                out[i] = b;
-                i++;
+        if (output.size() == passwordLength) {
+            PasswordBlock[] out = new PasswordBlock[passwordLength];
+
+            for (int i = 0;i<out.length;i++) {
+                out[i] = output.get(i);
             }
 
             if (superSecret.checkIt(out)) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+            }
+            else{
+                output.clear();
             }
         }
     }
@@ -136,9 +97,70 @@ public class CheckPassword extends AppCompatActivity {
         } else {
             tempColour = colourList.remove(rand.nextInt(colourList.size()));
         }
-        PasswordBlock block = new PasswordBlock(tempNumeric, tempShape, tempColour);
 
-        return block;
+        return new PasswordBlock(tempNumeric, tempShape, tempColour);
     }
+
+    public Button makeButton(int i){
+        Button addButton = new Button(this);
+
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        switch (displayArray[i].getColour()) {
+            case 0:
+                gradientDrawable.setColor(Color.BLUE);
+                break;
+            case 1:
+                gradientDrawable.setColor(Color.RED);
+                break;
+            case 2:
+                gradientDrawable.setColor(Color.YELLOW);
+                break;
+            case 3:
+                gradientDrawable.setColor(Color.GRAY);
+                break;
+            case 4:
+                gradientDrawable.setColor(Color.GREEN);
+                break;
+            case 5:
+                gradientDrawable.setColor(Color.BLACK);
+                break;
+            case 6:
+                gradientDrawable.setColor(Color.WHITE);
+                break;
+            case 7:
+                gradientDrawable.setColor(Color.CYAN);
+                break;
+            default:
+                Log.v("color","default");
+                break;
+        }
+        switch (displayArray[i].getShape()) {
+            case 0:
+                gradientDrawable.setShape(GradientDrawable.OVAL);
+                break;//Oval
+            case 1:
+                gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+                break;//Rectangle
+            case 2:
+                gradientDrawable.setShape(GradientDrawable.RING);
+                break;//Circle
+            case 3:
+                gradientDrawable.setShape(GradientDrawable.LINE);
+                break;//Line
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            addButton.setBackground(gradientDrawable);
+        }
+        addButton.setText(String.valueOf(displayArray[i].getNumeric()));
+        final int transfer = i;
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                checkPassword(displayArray[transfer]);
+            }
+        });
+        return addButton;
+    }
+
+
 
 }

@@ -6,11 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+//Created by Ben Baxter
 
 public class SetPassword extends AppCompatActivity {
     int[] numericPassword, shapePassword, colourPassword;
     Spinner shapeSpinner1, shapeSpinner2, shapeSpinner3, shapeSpinner4, colourSpinner1, colourSpinner2, colourSpinner3, colourSpinner4;
+    protected static final int passwordLength = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +23,8 @@ public class SetPassword extends AppCompatActivity {
 
         String[] shaArraySpinner = new String[]{"Square", "Rectangle", "Circle", "Oval"};
         String[] colArraySpinner = new String[]{"Blue", "Red", "Yellow", "Gray", "Green", "Black", "White", "Cyan"};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shaArraySpinner);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colArraySpinner);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, shaArraySpinner);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colArraySpinner);
         shapeSpinner1 = (Spinner) findViewById(R.id.Sha1);
         shapeSpinner2 = (Spinner) findViewById(R.id.Sha2);
         shapeSpinner3 = (Spinner) findViewById(R.id.Sha3);
@@ -43,21 +47,17 @@ public class SetPassword extends AppCompatActivity {
         CheckBox numericCheckBox = (CheckBox) findViewById(R.id.NumPass);
         CheckBox shapeCheckBox = (CheckBox) findViewById(R.id.ShapePass);
         CheckBox colourCheckBox = (CheckBox) findViewById(R.id.ColourPass);
-        String numericTemp = (findViewById(R.id.NumDigit)).toString();
-        if(!numericTemp.contentEquals("")){
-            char[] temp = numericTemp.toCharArray();
-            int[] tempArray = new int[3];
-            for (int i = 0; i < 3; i++) {
-                tempArray[i] = Character.getNumericValue(temp[i]);
-            }
-            numericPassword = tempArray;
-        }else{
-            numericPassword= new int[]{4,2,4,2};
+        EditText editText = (EditText) findViewById(R.id.NumDigit);
+        String numericTemp = editText.getText().toString();
+        numericPassword = new int[numericTemp.length()];
+        char[] temp = numericTemp.toCharArray();
+        for (int i = 0; i < temp.length; i++) {
+            numericPassword[i] = Character.getNumericValue(temp[i]);
         }
         shapePassword = new int[]{shapeSpinner1.getSelectedItemPosition(), shapeSpinner2.getSelectedItemPosition(), shapeSpinner3.getSelectedItemPosition(), shapeSpinner4.getSelectedItemPosition()};
         colourPassword = new int[]{colourSpinner1.getSelectedItemPosition(), colourSpinner2.getSelectedItemPosition(), colourSpinner3.getSelectedItemPosition(), colourSpinner4.getSelectedItemPosition()};
-        PasswordBlock[] packaging = new PasswordBlock[3];
-        for(int i = 0; i < 3;i++)
+        PasswordBlock[] packaging = new PasswordBlock[passwordLength];
+        for(int i = 0; i < packaging.length;i++)
         {
             PasswordBlock tempBlock = new PasswordBlock(numericPassword[i],shapePassword[i],colourPassword[i]);
             packaging[i] = tempBlock;
