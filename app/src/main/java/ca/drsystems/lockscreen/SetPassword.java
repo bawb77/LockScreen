@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+//Created by Ben Baxter
+
 public class SetPassword extends AppCompatActivity {
     int[] numericPassword, shapePassword, colourPassword;
     Spinner shapeSpinner1, shapeSpinner2, shapeSpinner3, shapeSpinner4, colourSpinner1, colourSpinner2, colourSpinner3, colourSpinner4;

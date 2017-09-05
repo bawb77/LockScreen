@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+//Created by Ben Baxter
+
 public class CheckPassword extends AppCompatActivity {
     Integer[] numericOptions = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     Integer[] shapeOptions = new Integer[]{0, 1, 2};

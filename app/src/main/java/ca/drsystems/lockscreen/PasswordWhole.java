@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+//Created by Ben Baxter
+
 class PasswordWhole implements Parcelable {
     private boolean numericPasswordEnabledFlag, shapePasswordEnabledFlag, colourPasswordEnabledFlag;
     private String[] hashedPasswords;
