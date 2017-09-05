@@ -1,19 +1,19 @@
 package ca.drsystems.lockscreen;
 
 
-public class PasswordBlock {
-    public int numeric, shape, colour;
+class PasswordBlock {
+    private int numeric, shape, colour;
 
-    public PasswordBlock(int n,int s,int c){
+    PasswordBlock(int n, int s, int c){
         this.numeric = n;
         this.shape = s;
         this.colour = c;
     }
-    public int getNumeric() {
+    int getNumeric() {
         return this.numeric;
     }
-    public int getShape(){ return this.shape; }
-    public int getColour(){
+    int getShape(){ return this.shape; }
+    int getColour(){
         return this.colour;
     }
 }

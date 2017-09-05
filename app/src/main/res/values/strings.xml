@@ -2,4 +2,8 @@
     <string name="app_name">LockScreen</string>
     <string name="title_activity_set_password">SetPassword</string>
     <string name="title_activity_check_password">CheckPassword</string>
+    <string name="numeric">Numeric</string>
+    <string name="shape">Shape</string>
+    <string name="colour">Colour</string>
+    <string name="setPassword">Set Password</string>
 </resources>
